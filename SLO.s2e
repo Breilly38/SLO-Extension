@@ -1,0 +1,6 @@
+{ "extensionName": "Scratch Laptop Orchestra",
+  "extensionPort": 12345,
+  "blockSpecs": [
+                [" ", "Play note %n for %n beats", "playNote", 60, 1],
+                ]
+}
