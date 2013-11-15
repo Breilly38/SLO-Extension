@@ -73,7 +73,11 @@ public class HelperAppGui extends javax.swing.JFrame {
 
     private void ConnectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConnectButtonActionPerformed
     try {
-          SLOHelperApp.Connect(IPField.getText());
+         String[] s = new String[2];
+         s[0] = IPField.getText();
+         s[1] = "40111";
+         
+          SLOHelperApp.Connect( s );
         } catch (Exception e) {
                e.printStackTrace(System.err);
 	}

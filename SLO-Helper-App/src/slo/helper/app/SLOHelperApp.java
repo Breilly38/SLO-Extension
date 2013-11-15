@@ -1,6 +1,6 @@
 package slo.helper.app;
 
-// SLOHelperApp.java
+// HTTPExtensionExample.java
 // Copyright (c) MIT Media Laboratory, 2013
 //
 // This example Scratch helper app runs a tiny HTTP server that allows Scratch to
@@ -8,14 +8,15 @@ package slo.helper.app;
 //
 // Inspired by Tom Lauwers Finch/Hummingbird server and Conner Hudson's Snap extensions.
 
+// I changed it up -- Matthew Vaughan - Nov 2013 - UMass Lowell
 import java.io.*;
 import java.net.*;
 import java.util.*;
 
 public class SLOHelperApp {
 
-	private static final int SERVERPORT = 40111; // the port of the server
-        private static final String SADDR = "127.0.0.1"; // server address
+	private static int SERVERPORT = 40111; // the port of the server
+   private static String SADDR = "127.0.0.1"; // server address
 	private static PrintWriter sSockOut;
    
 	public static double orchbeat = 0; // number of beats so far in current block
@@ -28,21 +29,33 @@ public class SLOHelperApp {
 	private static InputStream sockIn;
 	private static OutputStream sockOut;
 	
-	public static void Connect(String args) throws IOException {
+	public static void Connect(String[] args) throws IOException {
 		
-		// the server (which we will be a client of)
-      Socket sSock = new Socket( args, SERVERPORT );
-              
-      if ( sSock.isConnected() ) {
-         System.err.println("YES");
-      } else {
-         System.err.println("NO");
+      if ( args.length > 0 ) {
+         SADDR = args[0];
       }
-              
+      if ( args.length > 1 ) {
+         SERVERPORT = new Integer( args[1] ).intValue();
+      }      
+      
+
+		Socket sSock = null; // the server (which we will be a client of)
+      boolean connected = false;
+      
+      while ( !connected ) {
+         try { 
+            sSock = new Socket( SADDR, SERVERPORT );
+            connected = true;
+         } catch (Exception e) {
+            System.out.println("Connecting");
+            connected = false;
+         }
+      }
+                    
       sSockOut = new PrintWriter( sSock.getOutputStream(), true );
       
       // anything that gets sent, like so, will get executed by the server...
-      sSockOut.println("(define x 40404)");
+      // sSockOut.println("(define x 40404)");
       
 
 		InetAddress addr = InetAddress.getLocalHost();
@@ -63,7 +76,7 @@ public class SLOHelperApp {
 		}
 	}
 
-	public static void handleRequest() throws IOException {
+	private static void handleRequest() throws IOException {
 		String httpBuf = "";
 		int i;
 
