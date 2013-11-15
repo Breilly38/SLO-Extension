@@ -126,20 +126,23 @@ public class SLOHelperApp {
 		String[] parts = cmdAndArgs.split("/");
 		String cmd = parts[0];
 		if (cmd.equals("playNote")) {
-			int noteNum;
-			double duration;
-			
-			noteNum = Integer.parseInt(parts[1]);
-			duration = Double.parseDouble(parts[2]);
+			int noteNum = Integer.parseInt(parts[1]);
+			double duration = Double.parseDouble(parts[2]);
+			consecutivePolls = 0; // this is not a poll!
 			
 			String lispExpr = new String("(noteOn (+ (nm) (* (beat) " + orchbeat + " )) (myChannel) " + noteNum + " 127)(noteOff (+ (nm) (* (beat) " + (orchbeat + duration) + ")) (myChannel) "+ noteNum + " 127)");
 			sSockOut.println( lispExpr );
-			
+			sSockOut.flush();
+         
 			orchbeat += duration;
-			
 			//java.awt.Toolkit.getDefaultToolkit().beep();
-		} else if (cmd.equals("volume")) {
-			response = volume + "\n";
+		} else if (cmd.equals("changeInstrument")) {
+         int instrumentNum = Integer.parseInt(parts[1]);
+         consecutivePolls = 0; // this is not a poll!
+         
+         String lispExpr = new String("(changeInst " + instrumentNum + ")");
+         sSockOut.println( lispExpr );
+			sSockOut.flush();
 		} else if (cmd.equals("setVolume")) {
 			volume = Integer.parseInt(parts[1]);
 		} else if (cmd.equals("poll")) {
