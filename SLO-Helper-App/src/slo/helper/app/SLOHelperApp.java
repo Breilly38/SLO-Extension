@@ -155,9 +155,15 @@ public class SLOHelperApp {
          String lispExpr = new String("(changeInst " + instrumentNum + ")");
          sSockOut.println( lispExpr );
 			sSockOut.flush();
-		} else if (cmd.equals("setVolume")) {
-			volume = Integer.parseInt(parts[1]);
-		} else if (cmd.equals("poll")) {
+		} else if (cmd.equals("drumMode")) {
+			String lispExpr = new String("(drumMode #t)");
+         sSockOut.println( lispExpr );
+         sSockOut.flush();
+		} else if (cmd.equals("instMode")) { 
+         String lispExpr = new String("(drumMode #f)");
+         sSockOut.println( lispExpr );
+         sSockOut.flush();
+      } else if (cmd.equals("poll")) {
 			consecutivePolls++;
 			if ( consecutivePolls >= 4 ) {
 				consecutivePolls = 0;
