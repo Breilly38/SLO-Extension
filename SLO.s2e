@@ -1,5 +1,5 @@
 { "extensionName": "Scratch Laptop Orchestra",
-  "extensionPort": 40111,
+  "extensionPort": 12345,
   "blockSpecs" : [
       [" ", "Play note %n for %n beats", "playNote", 60, 1],
       [" ", "Choose instrument %m.instrument or type %s", "changeInstrument", "piano", "none"],
@@ -7,5 +7,4 @@
   "menus" : {
       "instrument" : ["Piano", "Marimba", "Acst Gtr", "Dist Gtr", "Bass", "Strings", "Voice", "Drums"]
   },	  
- "useHttp" : true,
 }

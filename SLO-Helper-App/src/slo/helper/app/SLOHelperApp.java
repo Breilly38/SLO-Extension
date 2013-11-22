@@ -147,10 +147,9 @@ public class SLOHelperApp {
 			sSockOut.println( lispExpr );
 			sSockOut.flush();
          
-			orchbeat += duration;
-			//java.awt.Toolkit.getDefaultToolkit().beep();
+			orchbeat += duration; // so were know where the next beat starts
 		} else if (cmd.equals("changeInstrument")) {
-         int instrumentNum = Integer.parseInt(parts[1]);
+         int instrumentNum = getInstrumentNumber( parts[1] );
          consecutivePolls = 0; // this is not a poll!
          
          String lispExpr = new String("(changeInst " + instrumentNum + ")");
@@ -171,6 +170,17 @@ public class SLOHelperApp {
 		sendResponse(response);
 	}
 
+   private static int getInstrumentNumber( String instrument ) {
+      if ( instrument.equalsIgnoreCase("Piano"))      return 1;
+      if ( instrument.equalsIgnoreCase("Marimba"))    return 12;
+      if ( instrument.equalsIgnoreCase("Acst Gtr"))   return 24;
+      if ( instrument.equalsIgnoreCase("Dist Gtr"))   return 30;
+      if ( instrument.equalsIgnoreCase("Bass"))       return 33;
+      if ( instrument.equalsIgnoreCase("Strings"))    return 48;
+      if ( instrument.equalsIgnoreCase("Voice"))      return 91;
+      else return 1; // default to piano
+   }
+   
 	private static void doHelp() {
 		// Optional: return a list of commands understood by this server
 		String help = "HTTP Extension Example Server<br><br>";
