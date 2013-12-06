@@ -240,7 +240,17 @@ public class SLOHelperApp extends Thread {
                 consecutivePolls = 0;
                 orchbeat = 0;
             }
+        } else if (cmd.equals("rest")) {
+            System.out.println("GOT A REST");
+            int noteNum = 0;
+            double duration = Double.parseDouble(parts[1]);
+            consecutivePolls = 0; // this is not a poll!
 
+            String lispExpr = new String("(noteOn (+ (nm) (* (beat) " + orchbeat + " )) (myChannel) " + noteNum + " 127)(noteOff (+ (nm) (* (beat) " + (orchbeat + duration) + ")) (myChannel) " + noteNum + " 127)");
+            sSockOut.println(lispExpr);
+            sSockOut.flush();
+
+            orchbeat += duration; // so were know where the next beat starts
         } else {
             response = "unknown command: " + cmd;
         }
