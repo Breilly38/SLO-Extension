@@ -16,15 +16,20 @@ public class SLOHelperApp extends Thread {
 
     private static int SERVERPORT = 40111; // the port of the server
     private static String SADDR = "127.0.0.1"; // server address
-    private static PrintWriter sSockOut;
+    private static final int PORT = 12345; // set to your extension's port number
+    
     public static double orchbeat = 0; // number of beats so far in current block
     public static int consecutivePolls = 0; // number of consecutive polls
-    private static final int PORT = 12345; // set to your extension's port number
-    private static int volume = 8; // replace with your extension's data, if any
+    
+    private static PrintWriter sSockOut;
+    private static BufferedReader sSockIn;
+    
     private static InputStream sockIn;
     private static OutputStream sockOut;
+    
     private static boolean connected = false;
     private javax.swing.JLabel isConnectedDisplay = null;
+    
     public static SLOHelperApp connect = new SLOHelperApp();
 
     private SLOHelperApp() {
@@ -97,6 +102,12 @@ public class SLOHelperApp extends Thread {
             sSockOut = new PrintWriter(sSock.getOutputStream(), true);
         } catch (IOException exception) {
             throw new RuntimeException("Unable to print to output stream", exception);
+        }
+        
+        try {
+           sSockIn = new BufferedReader(new InputStreamReader(sSock.getInputStream()));
+        } catch (IOException exception) {
+           throw new RuntimeException("Unable to get inputstream", exception);
         }
 
         // anything that gets sent, like so, will get executed by the server...
