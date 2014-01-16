@@ -214,8 +214,6 @@ public class SLOHelperApp extends Thread {
 
     private static void doCommand(String cmdAndArgs) {
 
-        System.out.println("Received: " + cmdAndArgs);
-
         // Essential: handle commands understood by this server
         String response = "okay";
         String[] parts = cmdAndArgs.split("/");
@@ -252,7 +250,6 @@ public class SLOHelperApp extends Thread {
                 orchbeat = 0;
             }
         } else if (cmd.equals("rest")) {
-            System.out.println("GOT A REST");
             int noteNum = 0;
             double duration = Double.parseDouble(parts[1]);
             consecutivePolls = 0; // this is not a poll!
@@ -262,6 +259,12 @@ public class SLOHelperApp extends Thread {
             sSockOut.flush();
 
             orchbeat += duration; // so were know where the next beat starts
+        } else if (cmd.equals("pan")) {
+            int panValue = Integer.parseInt(parts[1]);
+            
+            String lispExpr = new String("(Pan " + panValue + " (myChannel) )");
+            sSockOut.println(lispExpr);
+            sSockOut.flush();
         } else {
             response = "unknown command: " + cmd;
         }
