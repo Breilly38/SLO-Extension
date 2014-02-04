@@ -254,7 +254,7 @@ public class SLOHelperApp extends Thread {
             double duration = Double.parseDouble(parts[1]);
             consecutivePolls = 0; // this is not a poll!
 
-            String lispExpr = new String("(noteOn (+ (nm) (* (beat) " + orchbeat + " )) (myChannel) " + noteNum + " 127)(noteOff (+ (nm) (* (beat) " + (orchbeat + duration) + ")) (myChannel) " + noteNum + " 127)");
+            String lispExpr = new String("(noteOn (+ (nm) (* (beat) " + orchbeat + " )) (myChannel) " + noteNum + " 0)(noteOff (+ (nm) (* (beat) " + (orchbeat + duration) + ")) (myChannel) " + noteNum + " 0)");
             sSockOut.println(lispExpr);
             sSockOut.flush();
 

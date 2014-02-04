@@ -4,9 +4,11 @@
       [" ", "Play note %n for %n beats", "playNote", 60, 1],
       [" ", "Rest for %n beats", "rest", 1],
       [" ", "Choose instrument %m.instrument or type %s", "changeInstrument", "piano", "none"],
+      [" ", "Play Drums", "drumMode"],
+      [" ", "Play Instrument", "instMode"], 
       [" ", "Pan to %n", "pan", 64],
   ],
   "menus" : {
-      "instrument" : ["Piano", "Marimba", "Acst Gtr", "Dist Gtr", "Bass", "Strings", "Voice"]
+      "instrument" : ["Piano", "Marimba", "Acst Gtr", "Dist Gtr", "Bass", "Strings", "Voice", "Drums"]
   },	  
 }
